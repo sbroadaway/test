@@ -1,0 +1,73 @@
+POST /bookstoreProxy HTTP/1.0
+content-type: text/xml; charset=UTF-8
+host: localhost:9080
+soapaction: ""
+content-length: 395
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Body>
+  <getItemByTitle xmlns="http://bookstore.parasoft.com/">
+   <titleKeyword xmlns="">sql</titleKeyword>
+  </getItemByTitle>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+HTTP/1.1 200 OK
+Date: Tue, 30 Jun 2015 20:31:19 GMT
+Content-Length: 638
+Connection: close
+Content-Type: text/xml;charset=UTF-8
+Server: Apache-Coyote/1.1
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:getItemByTitleResponse xmlns:ns2="http://bookstore.parasoft.com/"><book><id>5</id><name>Oracle PL/SQL Programming, 3rd Edition</name><price>38889.47</price><stockQuantity>4</stockQuantity><authors>Steven Feuerstein</authors><authors>Bill Pribyl</authors><description>An indispensable reference for both novice and experienced PL/SQL developers</description><ISBN>0596003811</ISBN><publicationDate>2002-09-01T00:00:00-07:00</publicationDate><publisher>O'Reilly &amp; Associates</publisher></book></ns2:getItemByTitleResponse></soap:Body></soap:Envelope>
+
+POST /bookstoreProxy HTTP/1.0
+content-type: text/xml; charset=UTF-8
+host: localhost:9080
+soapaction: ""
+content-length: 414
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Body>
+  <addItemToCart xmlns="http://bookstore.parasoft.com/">
+   <itemId xmlns="">5</itemId>
+   <quantity xmlns="">1</quantity>
+  </addItemToCart>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+HTTP/1.1 200 OK
+Date: Tue, 30 Jun 2015 20:31:19 GMT
+Content-Length: 712
+Connection: close
+Content-Type: text/xml;charset=UTF-8
+Server: Apache-Coyote/1.1
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:addItemToCartResponse xmlns:ns2="http://bookstore.parasoft.com/"><itemAdded><cartId>4063</cartId><item><book><id>5</id><name>Oracle PL/SQL Programming, 3rd Edition</name><price>38.47</price><stockQuantity>4</stockQuantity><authors>Steven Feuerstein</authors><authors>Bill Pribyl</authors><description>An indispensable reference for both novice and experienced PL/SQL developers</description><ISBN>0596003811</ISBN><publicationDate>2002-09-01T00:00:00-07:00</publicationDate><publisher>O'Reilly &amp; Associates</publisher></book><quantity>1</quantity></item></itemAdded></ns2:addItemToCartResponse></soap:Body></soap:Envelope>
+
+POST /bookstoreProxy HTTP/1.0
+content-type: text/xml; charset=UTF-8
+host: localhost:9080
+soapaction: ""
+content-length: 378
+
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <SOAP-ENV:Body>
+  <submitOrder xmlns="http://bookstore.parasoft.com/">
+   <cartId xmlns="">4063</cartId>
+  </submitOrder>
+ </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+HTTP/1.1 200 OK
+Date: Tue, 30 Jun 2015 20:31:19 GMT
+Content-Length: 315
+Connection: close
+Content-Type: text/xml;charset=UTF-8
+Server: Apache-Coyote/1.1
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><ns2:submitOrderResponse xmlns:ns2="http://bookstore.parasoft.com/"><orderInformation><orderTime>2015-06-30T13:31:20.042-07:00</orderTime><success>true</success></orderInformation></ns2:submitOrderResponse></soap:Body></soap:Envelope>
+

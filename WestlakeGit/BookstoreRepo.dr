@@ -1,0 +1,451 @@
+{
+  "info":{
+    "name": "Bookstore2", 
+    "default-cluster-id": 3, 
+    "exporter-version": 5, 
+    "engine-version": "1.3.0", 
+    "storage-config-version": 4, 
+    "schema-version": 4, 
+    "mvrbtree-version": 3
+  }, 
+  "clusters": [
+    {"name": "default", "id": 3, "type": "PHYSICAL"}, 
+    {"name": "orole", "id": 4, "type": "PHYSICAL"}, 
+    {"name": "ouser", "id": 5, "type": "PHYSICAL"}, 
+    {"name": "ofunction", "id": 6, "type": "PHYSICAL"}, 
+    {"name": "_version", "id": 8, "type": "PHYSICAL"}, 
+    {"name": "_metadata", "id": 9, "type": "PHYSICAL"}, 
+    {"name": "additemtocartresponse", "id": 10, "type": "PHYSICAL"}, 
+    {"name": "itemadded", "id": 11, "type": "PHYSICAL"}, 
+    {"name": "item", "id": 12, "type": "PHYSICAL"}, 
+    {"name": "book", "id": 13, "type": "PHYSICAL"}, 
+    {"name": "_ds_additemtocart", "id": 14, "type": "PHYSICAL"}, 
+    {"name": "_dsr_additemtocart", "id": 15, "type": "PHYSICAL"}, 
+    {"name": "getitembytitleresponse", "id": 16, "type": "PHYSICAL"}, 
+    {"name": "_ds_getitembytitle", "id": 17, "type": "PHYSICAL"}, 
+    {"name": "_dsr_getitembytitle", "id": 18, "type": "PHYSICAL"}, 
+    {"name": "submitorderresponse", "id": 19, "type": "PHYSICAL"}, 
+    {"name": "orderinformation", "id": 20, "type": "PHYSICAL"}, 
+    {"name": "_ds_submitorder", "id": 21, "type": "PHYSICAL"}, 
+    {"name": "_dsr_submitorder", "id": 22, "type": "PHYSICAL"}, 
+    {"name": "_identity_export", "id": 23, "type": "PHYSICAL"}
+  ], 
+  "schema":{
+    "version": 103, 
+    "classes": [
+      {"name": "OFunction", "default-cluster-id": 6, "cluster-ids": [6], 
+        "properties": [
+          {"name": "code", "type": "STRING"}, 
+          {"name": "idempotent", "type": "BOOLEAN"}, 
+          {"name": "language", "type": "STRING"}, 
+          {"name": "name", "type": "STRING"}, 
+          {"name": "parameters", "type": "EMBEDDEDLIST", "linked-type": "STRING"}
+        ]
+      }, 
+      {"name": "OIdentity", "default-cluster-id": -1, "cluster-ids": [-1], "abstract": true
+      }, 
+      {"name": "ORIDs", "default-cluster-id": 7, "cluster-ids": [7]
+      }, 
+      {"name": "ORestricted", "default-cluster-id": -1, "cluster-ids": [-1], "abstract": true, 
+        "properties": [
+          {"name": "_allow", "type": "LINKSET", "linked-class": "OIdentity"}, 
+          {"name": "_allowDelete", "type": "LINKSET", "linked-class": "OIdentity"}, 
+          {"name": "_allowRead", "type": "LINKSET", "linked-class": "OIdentity"}, 
+          {"name": "_allowUpdate", "type": "LINKSET", "linked-class": "OIdentity"}
+        ]
+      }, 
+      {"name": "ORole", "default-cluster-id": 4, "cluster-ids": [4], "super-class": "OIdentity", 
+        "properties": [
+          {"name": "inheritedRole", "type": "LINK", "linked-class": "ORole"}, 
+          {"name": "mode", "type": "BYTE"}, 
+          {"name": "name", "type": "STRING", "mandatory": true, "not-null": true}, 
+          {"name": "rules", "type": "EMBEDDEDMAP", "linked-type": "BYTE"}
+        ]
+      }, 
+      {"name": "OUser", "default-cluster-id": 5, "cluster-ids": [5], "super-class": "OIdentity", 
+        "properties": [
+          {"name": "name", "type": "STRING", "mandatory": true, "not-null": true}, 
+          {"name": "password", "type": "STRING", "mandatory": true, "not-null": true}, 
+          {"name": "roles", "type": "LINKSET", "linked-class": "ORole"}, 
+          {"name": "status", "type": "STRING", "mandatory": true, "not-null": true}
+        ]
+      }, 
+      {"name": "_ds_addItemToCart", "default-cluster-id": 14, "cluster-ids": [14], 
+        "properties": [
+          {"name": "_criteria", "type": "BOOLEAN"}, 
+          {"name": "_type", "type": "STRING"}, 
+          {"name": "itemId", "type": "STRING"}
+        ]
+      }, 
+      {"name": "_ds_getItemByTitle", "default-cluster-id": 17, "cluster-ids": [17], 
+        "properties": [
+          {"name": "_criteria", "type": "BOOLEAN"}, 
+          {"name": "_type", "type": "STRING"}, 
+          {"name": "titleKeyword", "type": "STRING"}
+        ]
+      }, 
+      {"name": "_ds_submitOrder", "default-cluster-id": 21, "cluster-ids": [21], 
+        "properties": [
+          {"name": "_criteria", "type": "BOOLEAN"}, 
+          {"name": "_type", "type": "STRING"}, 
+          {"name": "cartId", "type": "STRING"}
+        ]
+      }, 
+      {"name": "_dsr_addItemToCart", "default-cluster-id": 15, "cluster-ids": [15]
+      }, 
+      {"name": "_dsr_getItemByTitle", "default-cluster-id": 18, "cluster-ids": [18]
+      }, 
+      {"name": "_dsr_submitOrder", "default-cluster-id": 22, "cluster-ids": [22]
+      }, 
+      {"name": "_identity_export", "default-cluster-id": 23, "cluster-ids": [23], 
+        "properties": [
+          {"name": "fields", "type": "EMBEDDEDLIST", "linked-type": "STRING"}, 
+          {"name": "recordTypeName", "type": "STRING"}
+        ]
+      }, 
+      {"name": "_metadata", "default-cluster-id": 9, "cluster-ids": [9], 
+        "properties": [
+          {"name": "fields", "type": "EMBEDDEDLIST", "linked-type": "STRING"}, 
+          {"name": "recordType", "type": "STRING"}
+        ]
+      }, 
+      {"name": "_version", "default-cluster-id": 8, "cluster-ids": [8]
+      }, 
+      {"name": "addItemToCartResponse", "default-cluster-id": 10, "cluster-ids": [10], 
+        "properties": [
+          {"name": "itemAdded", "type": "LINKLIST", "linked-class": "itemAdded"}
+        ]
+      }, 
+      {"name": "book", "default-cluster-id": 13, "cluster-ids": [13], 
+        "properties": [
+          {"name": "ISBN", "type": "STRING"}, 
+          {"name": "authors", "type": "EMBEDDEDLIST", "linked-type": "STRING"}, 
+          {"name": "description", "type": "STRING"}, 
+          {"name": "id", "type": "STRING"}, 
+          {"name": "name", "type": "STRING"}, 
+          {"name": "price", "type": "STRING"}, 
+          {"name": "publicationDate", "type": "STRING"}, 
+          {"name": "publisher", "type": "STRING"}, 
+          {"name": "stockQuantity", "type": "STRING"}
+        ]
+      }, 
+      {"name": "getItemByTitleResponse", "default-cluster-id": 16, "cluster-ids": [16], 
+        "properties": [
+          {"name": "book", "type": "LINKLIST", "linked-class": "book"}
+        ]
+      }, 
+      {"name": "item", "default-cluster-id": 12, "cluster-ids": [12], 
+        "properties": [
+          {"name": "book", "type": "LINKLIST", "linked-class": "book"}, 
+          {"name": "quantity", "type": "STRING"}
+        ]
+      }, 
+      {"name": "itemAdded", "default-cluster-id": 11, "cluster-ids": [11], 
+        "properties": [
+          {"name": "cartId", "type": "STRING"}, 
+          {"name": "item", "type": "LINKLIST", "linked-class": "item"}
+        ]
+      }, 
+      {"name": "orderInformation", "default-cluster-id": 20, "cluster-ids": [20], 
+        "properties": [
+          {"name": "orderTime", "type": "STRING"}, 
+          {"name": "success", "type": "STRING"}
+        ]
+      }, 
+      {"name": "submitOrderResponse", "default-cluster-id": 19, "cluster-ids": [19], 
+        "properties": [
+          {"name": "orderInformation", "type": "LINKLIST", "linked-class": "orderInformation"}
+        ]
+      }
+    ]
+  }, 
+  "records": [{
+          "@type": "d", "@rid": "#4:0", "@version": 0, "@class": "ORole", 
+"name": "admin", 
+"inheritedRole": null, 
+"mode": 1, 
+"rules": {}, 
+  "@fieldTypes": "mode=b"
+        },{
+          "@type": "d", "@rid": "#4:1", "@version": 1, "@class": "ORole", 
+"name": "reader", 
+"inheritedRole": null, 
+"mode": 0, 
+"rules": {"database": 2, "database.schema": 2, "database.cluster.internal": 2, "database.cluster.orole": 2, "database.cluster.ouser": 2, "database.class.*": 2, "database.cluster.*": 2, "database.command": 2, "database.hook.record": 2}, 
+  "@fieldTypes": "mode=b"
+        },{
+          "@type": "d", "@rid": "#4:2", "@version": 1, "@class": "ORole", 
+"name": "writer", 
+"inheritedRole": null, 
+"mode": 0, 
+"rules": {"database": 2, "database.schema": 7, "database.cluster.internal": 2, "database.cluster.orole": 2, "database.cluster.ouser": 2, "database.class.*": 15, "database.cluster.*": 15, "database.command": 15, "database.hook.record": 15}, 
+  "@fieldTypes": "mode=b"
+        },{
+          "@type": "d", "@rid": "#5:0", "@version": 0, "@class": "OUser", 
+"name": "admin", 
+"password": "{SHA-256}8C6976E5B5410415BDE908BD4DEE15DFB167A9C873FC4BB8A81F6F2AB448A918", 
+"status": "ACTIVE", 
+  "roles": [
+  "#4:0"]
+        },{
+          "@type": "d", "@rid": "#5:1", "@version": 0, "@class": "OUser", 
+"name": "reader", 
+"password": "{SHA-256}3D0941964AA3EBDCB00CCEF58B1BB399F9F898465E9886D5AEC7F31090A0FB30", 
+"status": "ACTIVE", 
+  "roles": [
+  "#4:1"]
+        },{
+          "@type": "d", "@rid": "#5:2", "@version": 0, "@class": "OUser", 
+"name": "writer", 
+"password": "{SHA-256}B93006774CBDD4B299389A03AC3D88C3A76B460D538795BC12718011A909FBA5", 
+"status": "ACTIVE", 
+  "roles": [
+  "#4:2"]
+        },{
+          "@type": "d", "@rid": "#8:0", "@version": 0, "@class": "_version", 
+"major": 9, 
+"minor": 7, 
+"subminor": 0
+        },{
+          "@type": "d", "@rid": "#9:0", "@version": 1, "@class": "_metadata", 
+"recordType": "addItemToCartResponse", 
+"fields": ["itemAdded"]
+        },{
+          "@type": "d", "@rid": "#9:1", "@version": 2, "@class": "_metadata", 
+"recordType": "itemAdded", 
+"fields": ["item", "cartId"]
+        },{
+          "@type": "d", "@rid": "#9:2", "@version": 2, "@class": "_metadata", 
+"recordType": "item", 
+"fields": ["book", "quantity"]
+        },{
+          "@type": "d", "@rid": "#9:3", "@version": 9, "@class": "_metadata", 
+"recordType": "book", 
+"fields": ["id", "authors", "price", "stockQuantity", "ISBN", "description", "name", "publicationDate", "publisher"]
+        },{
+          "@type": "d", "@rid": "#9:4", "@version": 1, "@class": "_metadata", 
+"recordType": "getItemByTitleResponse", 
+"fields": ["book"]
+        },{
+          "@type": "d", "@rid": "#9:5", "@version": 1, "@class": "_metadata", 
+"recordType": "submitOrderResponse", 
+"fields": ["orderInformation"]
+        },{
+          "@type": "d", "@rid": "#9:6", "@version": 2, "@class": "_metadata", 
+"recordType": "orderInformation", 
+"fields": ["orderTime", "success"]
+        },{
+          "@type": "d", "@rid": "#9:7", "@version": 2, "@class": "_metadata", 
+"recordType": "_identity_export", 
+"fields": ["recordTypeName", "fields"]
+        },{
+          "@type": "d", "@rid": "#10:0", "@version": 2, "@class": "addItemToCartResponse", 
+  "itemAdded": [
+  "#11:0"]
+        },{
+          "@type": "d", "@rid": "#10:1", "@version": 2, "@class": "addItemToCartResponse", 
+  "itemAdded": [
+  "#11:1"]
+        },{
+          "@type": "d", "@rid": "#10:2", "@version": 2, "@class": "addItemToCartResponse", 
+  "itemAdded": [
+  "#11:2"]
+        },{
+          "@type": "d", "@rid": "#11:0", "@version": 2, "@class": "itemAdded", 
+"cartId": "4059", 
+  "item": [
+  "#12:0"]
+        },{
+          "@type": "d", "@rid": "#11:1", "@version": 2, "@class": "itemAdded", 
+"cartId": "4061", 
+  "item": [
+  "#12:1"]
+        },{
+          "@type": "d", "@rid": "#11:2", "@version": 2, "@class": "itemAdded", 
+"cartId": "4060", 
+  "item": [
+  "#12:2"]
+        },{
+          "@type": "d", "@rid": "#12:0", "@version": 2, "@class": "item", 
+"quantity": "1", 
+  "book": [
+  "#13:0"]
+        },{
+          "@type": "d", "@rid": "#12:1", "@version": 2, "@class": "item", 
+"quantity": "1", 
+  "book": [
+  "#13:2"]
+        },{
+          "@type": "d", "@rid": "#12:2", "@version": 2, "@class": "item", 
+"quantity": "1", 
+  "book": [
+  "#13:1"]
+        },{
+          "@type": "d", "@rid": "#13:0", "@version": 2, "@class": "book", 
+"id": "2", 
+"authors": ["Harvey M. Deitel", "Paul J. Deitel"], 
+"price": "76.00", 
+"stockQuantity": "10", 
+"ISBN": "0130341517", 
+"description": "Great for Java beginners", 
+"name": "Java How to Dougie", 
+"publicationDate": "2001-08-08T00:00:00-07:00", 
+"publisher": "Prentice Hall"
+        },{
+          "@type": "d", "@rid": "#13:1", "@version": 1, "@class": "book", 
+"id": "1", 
+"authors": ["Harvey M. Deitel", "Paul J. Deitel"], 
+"price": "99.99", 
+"stockQuantity": "20", 
+"ISBN": "0130384747", 
+"description": "One of the best C++ books", 
+"name": "C++ How to Program (4th Edition)", 
+"publicationDate": "2002-08-12T00:00:00-07:00", 
+"publisher": "Prentice Hall"
+        },{
+          "@type": "d", "@rid": "#13:2", "@version": 1, "@class": "book", 
+"id": "4", 
+"authors": ["Evi Nemeth", "Garth Snyder", "Trent R. Hein", "Adam Boggs"], 
+"price": "49.99", 
+"stockQuantity": "3", 
+"ISBN": "0130084662", 
+"description": "Provides techniques and advice for administering three representative distributions Linux: Red Hat 7.2, SuSE 7.3, and Debian 3.0", 
+"name": "Linux Administration Handbook", 
+"publicationDate": "2002-03-25T00:00:00-08:00", 
+"publisher": "Prentice Hall"
+        },{
+          "@type": "d", "@rid": "#13:3", "@version": 1, "@class": "book", 
+"id": "3", 
+"authors": ["David Flanagan"], 
+"price": "38877.97", 
+"stockQuantity": "5", 
+"ISBN": "0596002831", 
+"description": "contains an accelerated introduction to the Java programming language and its key APIs so you can start writing code right away. Covers Java 1.4", 
+"name": "Java in a Nutshell, Fourth Edition", 
+"publicationDate": "2002-03-01T00:00:00-08:00", 
+"publisher": "O'Reilly & Associates"
+        },{
+          "@type": "d", "@rid": "#14:0", "@version": 1, "@class": "_ds_addItemToCart", 
+"itemId": "2", 
+"_criteria": false, 
+  "_value": [
+  "#10:0"], 
+"_type": "addItemToCartResponse"
+        },{
+          "@type": "d", "@rid": "#14:1", "@version": 1, "@class": "_ds_addItemToCart", 
+"itemId": "4", 
+"_criteria": false, 
+  "_value": [
+  "#10:1"], 
+"_type": "addItemToCartResponse"
+        },{
+          "@type": "d", "@rid": "#14:2", "@version": 1, "@class": "_ds_addItemToCart", 
+"itemId": "1", 
+"_criteria": false, 
+  "_value": [
+  "#10:2"], 
+"_type": "addItemToCartResponse"
+        },{
+          "@type": "d", "@rid": "#15:0", "@version": 2, "@class": "_dsr_addItemToCart", 
+  "rows": [
+  "#14:0", 
+  "#14:1", 
+  "#14:2"]
+        },{
+          "@type": "d", "@rid": "#16:0", "@version": 2, "@class": "getItemByTitleResponse", 
+  "book": [
+  "#13:0", 
+  "#13:3"]
+        },{
+          "@type": "d", "@rid": "#16:1", "@version": 2, "@class": "getItemByTitleResponse", 
+  "book": [
+  "#13:1"]
+        },{
+          "@type": "d", "@rid": "#16:2", "@version": 2, "@class": "getItemByTitleResponse", 
+  "book": [
+  "#13:2"]
+        },{
+          "@type": "d", "@rid": "#17:0", "@version": 1, "@class": "_ds_getItemByTitle", 
+"titleKeyword": "java", 
+"_criteria": false, 
+  "_value": [
+  "#16:0"], 
+"_type": "getItemByTitleResponse"
+        },{
+          "@type": "d", "@rid": "#17:1", "@version": 1, "@class": "_ds_getItemByTitle", 
+"titleKeyword": "c++", 
+"_criteria": false, 
+  "_value": [
+  "#16:1"], 
+"_type": "getItemByTitleResponse"
+        },{
+          "@type": "d", "@rid": "#17:2", "@version": 1, "@class": "_ds_getItemByTitle", 
+"titleKeyword": "linux", 
+"_criteria": false, 
+  "_value": [
+  "#16:2"], 
+"_type": "getItemByTitleResponse"
+        },{
+          "@type": "d", "@rid": "#18:0", "@version": 2, "@class": "_dsr_getItemByTitle", 
+  "rows": [
+  "#17:0", 
+  "#17:1", 
+  "#17:2"]
+        },{
+          "@type": "d", "@rid": "#19:0", "@version": 2, "@class": "submitOrderResponse", 
+  "orderInformation": [
+  "#20:0"]
+        },{
+          "@type": "d", "@rid": "#19:1", "@version": 2, "@class": "submitOrderResponse", 
+  "orderInformation": [
+  "#20:1"]
+        },{
+          "@type": "d", "@rid": "#19:2", "@version": 2, "@class": "submitOrderResponse", 
+  "orderInformation": [
+  "#20:2"]
+        },{
+          "@type": "d", "@rid": "#20:0", "@version": 0, "@class": "orderInformation", 
+"orderTime": "2015-06-30T12:52:55.293-07:00", 
+"success": "true"
+        },{
+          "@type": "d", "@rid": "#20:1", "@version": 0, "@class": "orderInformation", 
+"orderTime": "2015-06-30T12:52:56.750-07:00", 
+"success": "true"
+        },{
+          "@type": "d", "@rid": "#20:2", "@version": 0, "@class": "orderInformation", 
+"orderTime": "2015-06-30T12:52:56.029-07:00", 
+"success": "true"
+        },{
+          "@type": "d", "@rid": "#21:0", "@version": 1, "@class": "_ds_submitOrder", 
+"cartId": "4059", 
+"_criteria": false, 
+  "_value": [
+  "#19:0"], 
+"_type": "submitOrderResponse"
+        },{
+          "@type": "d", "@rid": "#21:1", "@version": 1, "@class": "_ds_submitOrder", 
+"cartId": "4061", 
+"_criteria": false, 
+  "_value": [
+  "#19:1"], 
+"_type": "submitOrderResponse"
+        },{
+          "@type": "d", "@rid": "#21:2", "@version": 1, "@class": "_ds_submitOrder", 
+"cartId": "4060", 
+"_criteria": false, 
+  "_value": [
+  "#19:2"], 
+"_type": "submitOrderResponse"
+        },{
+          "@type": "d", "@rid": "#22:0", "@version": 2, "@class": "_dsr_submitOrder", 
+  "rows": [
+  "#21:0", 
+  "#21:1", 
+  "#21:2"]
+        },{
+          "@type": "d", "@rid": "#23:0", "@version": 0, "@class": "_identity_export", 
+"recordTypeName": "book", 
+"fields": ["ISBN"]
+        }
+  ]
+}
